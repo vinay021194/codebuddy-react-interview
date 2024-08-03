@@ -1,5 +1,56 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  /* Replace 'your-image-url' with the path to your image */
+  background-image: url("/Bing.jpg");
+  background-size: cover; /* Ensures the image covers the entire background */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents image repetition */
+  background-attachment: fixed; /* Keeps the background fixed in place */
+}
+/* Custom CSS for media queries */
+
+/* Custom CSS for media queries */
+
+@media (min-width: 640px) {
+  .custom-carousel .p-carousel-item {
+    flex: 1 0 calc(50% - 1rem);
+  }
+}
+
+@media (min-width: 768px) {
+  .custom-carousel .p-carousel-item {
+    flex: 1 0 calc(33.33% - 1rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .custom-carousel .p-carousel-item {
+    flex: 1 0 calc(20% - 1rem);
+  }
+}
+
+/* Adjust toolbar for mobile */
+@media (max-width: 639px) {
+  .custom-panelmenu {
+    width: 100vw;
+  }
+}
+
+/* Ensure screen is scrollable */
+body,
+html {
+  overflow-y: auto;
+}
+/* Custom CSS for Carousel scroll icons */
+.custom-carousel .p-carousel-prev,
+.custom-carousel .p-carousel-next {
+  font-size: 2rem; /* Adjust the size as needed */
+}
+
+.custom-carousel .p-carousel-prev .pi,
+.custom-carousel .p-carousel-next .pi {
+  font-size: 2rem; /* Adjust the size as needed */
+}
