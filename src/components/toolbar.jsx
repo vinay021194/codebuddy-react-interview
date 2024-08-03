@@ -16,8 +16,8 @@ const Toolbar = () => {
   const menuRef = useRef(null);
 
   useOutsideClick(menuRef, () => {
-    if (isMenuOpen) setIsMenuOpen(false);
-    if (isMobileMenuOpen) setIsMobileMenuOpen(false);
+    setIsMenuOpen(false);
+    setIsMobileMenuOpen(false);
   });
 
   const handleSwitchChange = (setter) => (value) => {
@@ -26,22 +26,6 @@ const Toolbar = () => {
       menuRef.current.classList.add("prevent-close");
     }
   };
-
-  const createSwitch = (label, setter, marginLeft) => (
-    <div className="flex w-full items-center">
-      <span>{label}</span>
-      <Switch
-        onChange={handleSwitchChange(setter)}
-        checked
-        onColor="#0099CC"
-        uncheckedIcon={false}
-        checkedIcon={false}
-        height={15}
-        width={40}
-        className={`ml-${marginLeft}`}
-      />
-    </div>
-  );
 
   const items = [
     {
@@ -64,9 +48,57 @@ const Toolbar = () => {
       label: "Customize Homepage",
       icon: "pi pi-home",
       items: [
-        { label: createSwitch("Show Menubar", setShowMenubar, 40) },
-        { label: createSwitch("Show Homepage image", setShowHomepageImage, 28) },
-        { label: createSwitch("Show news and interests", setShowNewsAndInterests, 28) },
+        {
+          label: (
+            <div className="flex w-full items-center">
+              <span>Show Menubar</span>
+              <Switch
+                onChange={handleSwitchChange(setShowMenubar)}
+                checked
+                onColor="#0099CC"
+                uncheckedIcon={false}
+                checkedIcon={false}
+                height={15}
+                width={40}
+                className="ml-40"
+              />
+            </div>
+          ),
+        },
+        {
+          label: (
+            <div className="flex w-full items-center">
+              <span>Show Homepage image</span>
+              <Switch
+                onChange={handleSwitchChange(setShowHomepageImage)}
+                checked
+                onColor="#0099CC"
+                uncheckedIcon={false}
+                checkedIcon={false}
+                height={15}
+                width={40}
+                className="ml-28"
+              />
+            </div>
+          ),
+        },
+        {
+          label: (
+            <div className="flex w-full items-center">
+              <span>Show news and interests</span>
+              <Switch
+                onChange={handleSwitchChange(setShowNewsAndInterests)}
+                checked
+                onColor="#0099CC"
+                uncheckedIcon={false}
+                checkedIcon={false}
+                height={15}
+                width={40}
+                className="ml-28"
+              />
+            </div>
+          ),
+        },
       ],
     },
   ];
@@ -77,9 +109,15 @@ const Toolbar = () => {
         <div className="flex items-center space-x-2">
           <img src="binglogo.png" alt="Microsoft Bing Logo" className="h-8 w-auto sm:h-10" />
           <div className="hidden items-center space-x-5 text-sm sm:flex">
-            <a href="#">Image</a>
-            <a href="#">Video</a>
-            <a href="#">Translate</a>
+            <a href="#" className="hover:underline">
+              Image
+            </a>
+            <a href="#" className="hover:underline">
+              Video
+            </a>
+            <a href="#" className="hover:underline">
+              Translate
+            </a>
             <i className="pi pi-ellipsis-h cursor-pointer text-2xl"></i>
           </div>
           <button className="p-2 sm:hidden" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
@@ -88,7 +126,7 @@ const Toolbar = () => {
         </div>
         <div className="flex items-center space-x-6">
           <div className="flex items-center space-x-2">
-            <a href="#" className="cursor-pointer text-sm">
+            <a href="#" className="cursor-pointer text-sm hover:underline">
               Sign In
             </a>
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white">
@@ -102,13 +140,12 @@ const Toolbar = () => {
       </div>
 
       {isMenuOpen && (
-        <div className="absolute right-0 z-20 mr-14 mt-2 w-80 text-xs">
+        <div ref={menuRef} className="absolute right-0 z-20 mr-14 mt-2 w-80 text-xs">
           <div className="rounded-md bg-white shadow-lg">
             <PanelMenu
-              ref={menuRef}
               model={items}
               className="custom-panelmenu rounded-md text-xs text-black"
-              multiple={true}
+              multiple
             />
             <div className="mt-2 border-t border-gray-300"></div>
             <div className="p-2 text-center text-xs text-gray-600">
@@ -121,13 +158,13 @@ const Toolbar = () => {
       {isMobileMenuOpen && (
         <div className="absolute left-0 top-16 z-10 w-full bg-white shadow-lg">
           <div className="flex flex-col p-2">
-            <a href="#" className="p-2 text-black">
+            <a href="#" className="p-2 text-black hover:bg-gray-100">
               Image
             </a>
-            <a href="#" className="p-2 text-black">
+            <a href="#" className="p-2 text-black hover:bg-gray-100">
               Video
             </a>
-            <a href="#" className="p-2 text-black">
+            <a href="#" className="p-2 text-black hover:bg-gray-100">
               Translate
             </a>
           </div>
