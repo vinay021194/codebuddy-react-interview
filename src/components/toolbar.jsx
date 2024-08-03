@@ -1,11 +1,11 @@
 import React, { useState, useRef } from "react";
 import { PanelMenu } from "primereact/panelmenu";
-import Switch from "react-switch"; // Import react-switch
+import Switch from "react-switch";
 import { useOutsideClick } from "./useOutsideClick";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
-import "../index.css"; // Import your custom CSS
+import "../index.css";
 
 const Toolbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,14 +20,28 @@ const Toolbar = () => {
     if (isMobileMenuOpen) setIsMobileMenuOpen(false);
   });
 
-  // Function to handle switch change without closing menu
   const handleSwitchChange = (setter) => (value) => {
     setter(value);
-    // Prevent closing menu when switch is toggled
     if (menuRef.current) {
       menuRef.current.classList.add("prevent-close");
     }
   };
+
+  const createSwitch = (label, setter, marginLeft) => (
+    <div className="flex w-full items-center">
+      <span>{label}</span>
+      <Switch
+        onChange={handleSwitchChange(setter)}
+        checked
+        onColor="#0099CC"
+        uncheckedIcon={false}
+        checkedIcon={false}
+        height={15}
+        width={40}
+        className={`ml-${marginLeft}`}
+      />
+    </div>
+  );
 
   const items = [
     {
@@ -50,57 +64,9 @@ const Toolbar = () => {
       label: "Customize Homepage",
       icon: "pi pi-home",
       items: [
-        {
-          label: (
-            <div className="flex w-full items-center">
-              <span>Show Menubar</span>
-              <Switch
-                onChange={handleSwitchChange(setShowMenubar)}
-                checked
-                onColor="#0099CC"
-                uncheckedIcon={false}
-                checkedIcon={false}
-                height={15}
-                width={40}
-                className="ml-40"
-              />
-            </div>
-          ),
-        },
-        {
-          label: (
-            <div className="flex w-full items-center">
-              <span>Show Homepage image</span>
-              <Switch
-                onChange={handleSwitchChange(setShowHomepageImage)}
-                checked
-                onColor="#0099CC"
-                uncheckedIcon={false}
-                checkedIcon={false}
-                height={15}
-                width={40}
-                className="ml-28"
-              />
-            </div>
-          ),
-        },
-        {
-          label: (
-            <div className="flex w-full items-center">
-              <span>Show news and interests</span>
-              <Switch
-                onChange={handleSwitchChange(setShowNewsAndInterests)}
-                checked
-                onColor="#0099CC"
-                uncheckedIcon={false}
-                checkedIcon={false}
-                height={15}
-                width={40}
-                className="ml-28"
-              />
-            </div>
-          ),
-        },
+        { label: createSwitch("Show Menubar", setShowMenubar, 40) },
+        { label: createSwitch("Show Homepage image", setShowHomepageImage, 28) },
+        { label: createSwitch("Show news and interests", setShowNewsAndInterests, 28) },
       ],
     },
   ];
@@ -146,13 +112,12 @@ const Toolbar = () => {
             />
             <div className="mt-2 border-t border-gray-300"></div>
             <div className="p-2 text-center text-xs text-gray-600">
-              Privacy and Cookies• Legal• Advertise• About our ads• Help © 2024 Microsoft
-            </div>{" "}
+              Privacy and Cookies • Legal • Advertise • About our ads • Help © 2024 Microsoft
+            </div>
           </div>
         </div>
       )}
 
-      {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="absolute left-0 top-16 z-10 w-full bg-white shadow-lg">
           <div className="flex flex-col p-2">
